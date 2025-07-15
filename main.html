@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jatin Alla - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-color: #192a56; /* Rich Navy */
+            --secondary-color: #bca136; /* Gold/Ochre */
+            --accent-color: #c44536; /* Terracotta */
+            --background-color: #f7f7f7; /* Warm Off-White */
+            --text-color: #2c3e50; /* Dark Charcoal */
+            --card-bg-color: #ffffff; /* White */
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2c3e50 100%);
+        }
+        .btn-primary {
+            background-color: var(--secondary-color);
+        }
+        .btn-primary:hover {
+            background-color: #a1882c;
+        }
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+         .btn-accent:hover {
+            background-color: #a33a2c;
+        }
+        .section-title {
+            color: var(--primary-color);
+        }
+        .card {
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+        }
+        .card h3 {
+            color: var(--primary-color);
+        }
+        .card h4 {
+            color: #7f8c8d;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+        }
+        .card a {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .card-icon {
+            color: var(--secondary-color);
+        }
+        footer {
+            background-color: var(--primary-color);
+        }
+        footer a {
+            color: var(--secondary-color);
+        }
+        .nav-link {
+            position: relative;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        /* Gemini Modal Styles */
+        .gemini-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .gemini-modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .gemini-modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .gemini-modal-overlay.visible .gemini-modal-content {
+            transform: scale(1);
+        }
+        .gemini-modal-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .gemini-modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ================== HEADER ================== -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold" style="font-family: 'Playfair Display', serif; color: var(--primary-color);">Jatin Alla</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#ventures" class="nav-link">Ventures</a>
+                <a href="#interests" class="nav-link">Interests</a>
+                <a href="#archive" class="nav-link">Archive</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <a href="Jatin Alla CV (7.14.2025).pdf" target="_blank" class="btn-accent text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105 shadow-md">View CV</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================== HERO SECTION ================== -->
+        <section id="hero" class="hero-section text-white py-24 pt-40">
+            <div class="container mx-auto px-6 text-center">
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Designing Technology for Human Connection</h1>
+                <p id="hero-subtitle" class="text-lg md:text-xl mb-10 max-w-3xl mx-auto" style="font-family: 'Source Sans Pro', sans-serif;">An HCI researcher and entrepreneur leveraging AI to solve loneliness, foster well-being, and empower people to connect, heal, and thrive.</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#ventures" class="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg transition-all transform hover:scale-105 shadow-xl">Explore My Ventures</a>
+                    <button id="generate-mission-btn" class="bg-white/20 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all transform hover:scale-105 hover:bg-white/30">✨ Generate Mission Statement</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================== ABOUT ME ================== -->
+        <section id="about" class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <img src="https://placehold.co/200x200/bca136/ffffff?text=JA" alt="A profile picture of Jatin Alla" class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-white shadow-2xl" style="border-color: var(--secondary-color);">
+                    <div class="text-center md:text-left max-w-2xl">
+                        <h2 class="section-title text-4xl font-bold mb-6">I'm Jatin Alla</h2>
+                        <p class="mb-4 text-lg leading-relaxed">With a background in Cognitive Science and HCI, my work sits at the intersection of psychology, neuroscience, and artificial intelligence. My core mission is to build technologies that address fundamental human needs for connection and well-being.</p>
+                        <p class="text-lg leading-relaxed">After foundational research experiences at Google and UC Santa Cruz, I've founded <strong>Kairos AI</strong> to create tools for personal growth and healing. Through my podcasts and entrepreneurial work, I'm dedicated to exploring how we can build a more mindful and connected future.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================== VENTURES & PODCASTS ================== -->
+        <section id="ventures" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl font-bold text-center mb-16">My Main Venture & Creative Outlets</h2>
+
+                <!-- Main Venture: Kairos AI -->
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden mb-20 border-2" style="border-color: var(--secondary-color);">
+                    <div class="p-8 md:p-12 md:flex md:items-center md:gap-12">
+                        <div class="md:w-1/3 text-center mb-8 md:mb-0">
+                            <!-- Custom Kairos AI SVG Logo -->
+                            <svg class="w-24 h-24 mx-auto mb-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <radialGradient id="kairosGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" style="stop-color:var(--secondary-color); stop-opacity:0.3" />
+                                        <stop offset="100%" style="stop-color:var(--primary-color); stop-opacity:0" />
+                                    </radialGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="48" fill="url(#kairosGradient)" />
+                                <path d="M50 10 V 90 M10 50 H 90" stroke="var(--secondary-color)" stroke-width="2" opacity="0.5"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--primary-color)" stroke-width="2"/>
+                                <g stroke="var(--primary-color)" stroke-width="1.5">
+                                    <path d="M50 50 Q 65 35 80 20" />
+                                    <path d="M50 50 Q 35 35 20 20" />
+                                    <path d="M50 50 Q 35 65 20 80" />
+                                    <path d="M50 50 Q 65 65 80 80" />
+                                    <path d="M50 50 Q 35 50 20 50" />
+                                    <path d="M50 50 Q 65 50 80 50" />
+                                    <path d="M50 50 Q 50 35 50 20" />
+                                    <path d="M50 50 Q 50 65 50 80" />
+                                </g>
+                                <circle cx="50" cy="50" r="5" fill="var(--secondary-color)"/>
+                            </svg>
+                            <h3 class="text-4xl font-bold mb-2">Kairos AI</h3>
+                            <p class="text-lg font-semibold" style="color: var(--primary-color);">Founder</p>
+                        </div>
+                        <div class="md:w-2/3 text-center md:text-left">
+                            <p id="kairos-desc" class="text-lg leading-relaxed mb-6">Kairos AI is my primary focus—a venture dedicated to creating a 'Personalized Inner Compass' that guides individuals towards self-actualization. By integrating ancient wisdom with cutting-edge AI, we aim to foster genuine human connection and heal the pervasive problems of isolation and loneliness in our modern world.</p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                                <a href="#" target="_blank" class="btn-accent text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg inline-block">Discover Kairos AI &rarr;</a>
+                                <button id="generate-principles-btn" class="bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 hover:bg-gray-300">✨ Generate Core Principles</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Podcasts -->
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- Why Life? Podcast -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-8 flex-grow flex flex-col text-center">
+                             <!-- Custom Why Life SVG Logo -->
+                            <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M35 20 C 5 -20, 95 -20, 65 20 S 40 80, 50 90" fill="none" stroke="var(--primary-color)" stroke-width="5" />
+                               <path d="M65 80 C 95 120, 5 120, 35 80 S 60 20, 50 10" fill="none" stroke="var(--accent-color)" stroke-width="5" opacity="0.8"/>
+                            </svg>
+                            <h3 class="text-2xl font-bold mb-2">"Why Life?" Podcast</h3>
+                            <p id="why-life-desc" class="flex-grow">Host of a long-form podcast featuring deep, unhurried conversations that explore the transformative moments that shape our lives.</p>
+                            <div class="mt-6">
+                                <a href="#" target="_blank" class="text-gray-700 font-semibold mr-4">Listen Here</a>
+                                <button id="generate-guest-btn" class="text-sm font-bold text-white py-2 px-4 rounded-md" style="background-color: var(--primary-color);">✨ Suggest a Guest</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- It's Never Too Late Podcast -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-8 flex-grow flex flex-col text-center">
+                             <!-- Custom It's Never Too Late SVG Logo -->
+                            <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M20 80 H 80 V 90 H 20 Z" fill="var(--primary-color)"/>
+                               <path d="M25 20 H 75 V 80 H 25 Z" fill="none" stroke="var(--primary-color)" stroke-width="5"/>
+                               <path d="M50 25 C 40 25 35 35 35 45 C 35 55 50 65 50 65 S 65 55 65 45 C 65 35 60 25 50 25 Z" fill="var(--secondary-color)"/>
+                               <path d="M50 65 V 75" stroke="var(--primary-color)" stroke-width="5"/>
+                            </svg>
+                            <h3 class="text-2xl font-bold mb-2">"It's Never Too Late" Podcast</h3>
+                            <p class="flex-grow">A podcast exploring the intersection of AI, education, and ethics, engaging with experts on balancing innovation with responsibility.</p>
+                            <a href="#" target="_blank" class="mt-6 inline-block">Listen Here &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ================== INTERESTS & HOBBIES ================== -->
+        <section id="interests" class="py-24">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl font-bold text-center mb-16">Beyond the Work</h2>
+                
+                <!-- Main Hobby: Photography -->
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden mb-20 border-2" style="border-color: var(--secondary-color);">
+                    <div class="p-8 md:p-12 md:flex md:items-center md:gap-12">
+                        <div class="md:w-1/3 text-center mb-8 md:mb-0">
+                            <i data-lucide="camera" class="card-icon w-24 h-24 mb-4 mx-auto"></i>
+                            <h3 class="text-4xl font-bold mb-2">Photography</h3>
+                            <p class="text-lg font-semibold" style="color: var(--primary-color);">A Passion for Perspective</p>
+                        </div>
+                        <div class="md:w-2/3 text-center md:text-left">
+                            <p class="text-lg leading-relaxed mb-6">Outside of my professional work, I find great joy and inspiration in photography. It's a practice of mindfulness—a way to explore the world, capture fleeting moments, and tell stories through light, shadow, and composition. It teaches me to see the beauty in everyday scenes and find new perspectives.</p>
+                            <a href="https://jatinalla2000.myportfolio.com/work" target="_blank" class="btn-accent text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg inline-block">View My Work &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Interests -->
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- Mindfulness -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-8 flex-grow flex flex-col text-center">
+                            <i data-lucide="leaf" class="card-icon w-12 h-12 mb-4 mx-auto"></i>
+                            <h3 class="text-2xl font-bold mb-2">Mindfulness & Meditation</h3>
+                            <p class="flex-grow">Dedicated to practices like Vipassana for mental clarity, self-awareness, and connecting with the present moment.</p>
+                        </div>
+                    </div>
+                    <!-- Philosophy -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-8 flex-grow flex flex-col text-center">
+                            <i data-lucide="book-open" class="card-icon w-12 h-12 mb-4 mx-auto"></i>
+                            <h3 class="text-2xl font-bold mb-2">Exploring Philosophy</h3>
+                            <p class="flex-grow">Diving into ancient wisdom and modern thought to understand the deeper questions of life and consciousness.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================== ARCHIVE ================== -->
+        <section id="archive" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl font-bold text-center mb-16">Archive: Past Projects & Research</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card for Coaching LLM -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Coaching LLM with Fitbit</h3>
+                            <h4>Google Research (2022-2024)</h4>
+                            <p>Led a year-long project testing LLMs for empathy and motivation in fitness coaching.</p>
+                        </div>
+                    </div>
+                    <!-- Card for Foodlens -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Foodlens Vision Models</h3>
+                            <h4>Google Research (2022-2024)</h4>
+                            <p>Led qualitative research for a food app, resulting in a publication at AAMAS 2024.</p>
+                        </div>
+                    </div>
+                    <!-- Card for Ethical AI -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Ethical AI in Healthcare</h3>
+                            <h4>Google Research (2022-2024)</h4>
+                            <p>Initiated research with Google's PAIR team on user safety and ethics in health LLMs.</p>
+                        </div>
+                    </div>
+                    <!-- Card for Twitter Algorithm -->
+                    <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Twitter Hate Speech Algorithm</h3>
+                            <h4>CAVEAT, UCSC (2021-2022)</h4>
+                            <p>Researched the ethical impact of the algorithm and built a Python GUI for NLP data visualization.</p>
+                        </div>
+                    </div>
+                    <!-- Card for Foundational HCI -->
+                     <div class="card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                         <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Foundational HCI Research</h3>
+                            <h4>UCSC Research Labs (2020-2021)</h4>
+                            <p>Contributed to the 'PlaceMap' project and conducted pilot studies on social media affordances.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================== CONTACT ================== -->
+        <section id="contact" class="py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title text-4xl font-bold mb-6">Let's Connect</h2>
+                <p class="max-w-2xl mx-auto mb-10 text-lg">I'm always open to discussing new projects, creative ideas, or opportunities to be part of something meaningful. Feel free to reach out.</p>
+                <div class="flex justify-center space-x-6">
+                     <a href="mailto:jatinalla2000@gmail.com" class="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg transition-all transform hover:scale-105 shadow-xl">Email Me</a>
+                     <a href="https://www.linkedin.com/in/name" target="_blank" class="btn-accent text-white font-bold py-3 px-8 rounded-lg text-lg transition-all transform hover:scale-105 shadow-xl">LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================== FOOTER ================== -->
+    <footer class="text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Jatin Alla. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Gemini Modal -->
+    <div id="gemini-modal" class="gemini-modal-overlay">
+        <div class="gemini-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="gemini-modal-title" class="gemini-modal-title">✨ AI Suggestions</h3>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="gemini-modal-body" class="gemini-modal-body">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        lucide.createIcons();
+        
+        // --- Smooth Scrolling ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- Gemini API Integration ---
+        const modal = document.getElementById('gemini-modal');
+        const modalTitle = document.getElementById('gemini-modal-title');
+        const modalBody = document.getElementById('gemini-modal-body');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        const missionBtn = document.getElementById('generate-mission-btn');
+        const principlesBtn = document.getElementById('generate-principles-btn');
+        const guestBtn = document.getElementById('generate-guest-btn');
+
+        // Function to show the modal
+        function showModal() {
+            modal.classList.add('visible');
+        }
+
+        // Function to hide the modal
+        function hideModal() {
+            modal.classList.remove('visible');
+        }
+
+        // Close modal event
+        closeModalBtn.addEventListener('click', hideModal);
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                hideModal();
+            }
+        });
+
+        // Generic function to call Gemini API
+        async function callGemini(prompt) {
+            modalBody.innerHTML = '<div class="loader"></div>';
+            showModal();
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    modalBody.innerHTML = text;
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                modalBody.innerHTML = `<p class="text-red-500">Sorry, something went wrong. Please try again later.</p><p class="text-xs text-gray-500 mt-2">${error.message}</p>`;
+            }
+        }
+
+        // Event listener for Mission Statement button
+        missionBtn.addEventListener('click', () => {
+            const heroTitle = document.getElementById('hero-title').innerText;
+            const heroSubtitle = document.getElementById('hero-subtitle').innerText;
+            const prompt = `Based on the following headline and description, generate 3 concise and inspiring mission statements for a personal portfolio. Make them distinct from each other.
+            
+            Headline: "${heroTitle}"
+            Description: "${heroSubtitle}"
+            
+            Format the response clearly with each mission statement numbered.`;
+            modalTitle.innerText = '✨ AI-Generated Mission Statements';
+            callGemini(prompt);
+        });
+
+        // Event listener for Core Principles button
+        principlesBtn.addEventListener('click', () => {
+            const kairosDesc = document.getElementById('kairos-desc').innerText;
+            const prompt = `Based on the following description for a company called "Kairos AI", generate a list of 5 core principles or values. These principles should be actionable and reflect the company's mission.
+            
+            Description: "${kairosDesc}"
+            
+            Format the response as a numbered list with a brief explanation for each principle.`;
+            modalTitle.innerText = '✨ Kairos AI: Core Principles';
+            callGemini(prompt);
+        });
+
+        // Event listener for Guest Suggestion button
+        guestBtn.addEventListener('click', () => {
+            const whyLifeDesc = document.getElementById('why-life-desc').innerText;
+            const prompt = `Based on the following description for a podcast called "'Why Life?'", suggest one ideal guest who would be a great fit. Provide a brief, compelling rationale for why this person should be a guest.
+            
+            Podcast Description: "${whyLifeDesc}"
+            
+            Format the response with the guest's name as a heading and the rationale below it.`;
+            modalTitle.innerText = '✨ Podcast Guest Suggestion';
+            callGemini(prompt);
+        });
+
+    </script>
+
+</body>
+</html>
